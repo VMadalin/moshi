@@ -16,6 +16,7 @@
 package com.squareup.moshi.kotlin.codegen
 
 import com.google.common.collect.LinkedHashMultimap
+import com.squareup.kotlinpoet.metadata.KotlinPoetMetadataPreview
 import okio.Buffer
 import okio.Okio
 import org.jetbrains.kotlin.cli.common.CLITool
@@ -31,6 +32,7 @@ import java.util.zip.ZipOutputStream
 import kotlin.reflect.KClass
 
 /** Prepares an invocation of the Kotlin compiler. */
+@UseExperimental(KotlinPoetMetadataPreview::class)
 class KotlinCompilerCall(var scratchDir: File) {
   val sourcesDir = File(scratchDir, "sources")
   val classesDir = File(scratchDir, "classes")

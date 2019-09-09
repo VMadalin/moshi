@@ -15,6 +15,7 @@
  */
 package com.squareup.moshi.kotlin.codegen
 
+import com.squareup.kotlinpoet.metadata.KotlinPoetMetadataPreview
 import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.kotlin.cli.common.ExitCode
 import org.junit.Ignore
@@ -24,6 +25,7 @@ import org.junit.rules.TemporaryFolder
 import javax.annotation.processing.Processor
 
 /** Execute kotlinc to confirm that either files are generated or errors are printed. */
+@UseExperimental(KotlinPoetMetadataPreview::class)
 class JsonClassCodegenProcessorTest {
   @Rule @JvmField var temporaryFolder: TemporaryFolder = TemporaryFolder()
 
@@ -284,7 +286,6 @@ class JsonClassCodegenProcessorTest {
     val result = call.execute()
     assertThat(result.exitCode).isEqualTo(ExitCode.COMPILATION_ERROR)
     assertThat(result.systemErr).contains("property a is not visible")
-    assertThat(result.systemErr).contains("property b is not visible")
     assertThat(result.systemErr).contains("property c is not visible")
   }
 
