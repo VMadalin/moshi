@@ -25,7 +25,22 @@
     <dependency>
       <groupId>com.squareup</groupId>
       <artifactId>kotlinpoet</artifactId>
-      <version>1.2.0</version>
+      <version>${kotlinpoet.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.squareup</groupId>
+      <artifactId>kotlinpoet-metadata</artifactId>
+      <version>${kotlinpoet.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.squareup</groupId>
+      <artifactId>kotlinpoet-metadata-specs</artifactId>
+      <version>${kotlinpoet.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.squareup</groupId>
+      <artifactId>kotlinpoet-elementhandler-elements</artifactId>
+      <version>${kotlinpoet.version}</version>
     </dependency>
     <dependency>
       <groupId>net.ltgt.gradle.incap</groupId>
@@ -70,10 +85,6 @@
       <groupId>org.jetbrains.kotlin</groupId>
       <artifactId>kotlin-annotation-processing-embeddable</artifactId>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>me.eugeniomarletti.kotlin.metadata</groupId>
-      <artifactId>kotlin-metadata</artifactId>
     </dependency>
     <!--
       Though we don't use compile-testing, including it is a convenient way to get tools.jar on the
