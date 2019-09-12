@@ -210,7 +210,7 @@ internal class AdapterGenerator(
           result.addStatement("%N = %N.fromJson(%N)",
               property.localName, nameAllocator[property.delegateKey], readerParam)
         } else {
-          val exception = unexpectedNull(property.localName, readerParam)
+          val exception = unexpectedNull(property, readerParam)
           result.addStatement("%N = %N.fromJson(%N) ?: throw·%L",
               property.localName, nameAllocator[property.delegateKey], readerParam, exception)
         }
@@ -228,7 +228,7 @@ internal class AdapterGenerator(
           result.addStatement("%L -> %N = %N.fromJson(%N)",
               propertyIndex, property.localName, nameAllocator[property.delegateKey], readerParam)
         } else {
-          val exception = unexpectedNull(property.localName, readerParam)
+          val exception = unexpectedNull(property, readerParam)
           result.addStatement("%L -> %N = %N.fromJson(%N) ?: throw·%L",
               propertyIndex, property.localName, nameAllocator[property.delegateKey], readerParam,
               exception)
@@ -297,7 +297,8 @@ internal class AdapterGenerator(
       }
       if (!property.isTransient && property.isRequired) {
         val missingPropertyBlock =
-            CodeBlock.of("%T.missingProperty(%S, %N)", Util::class, property.localName, readerParam)
+            CodeBlock.of("%T.missingProperty(%S, %L, %N)",
+                Util::class, property.localName, property.jsonNameIfDifferent(), readerParam)
         result.addCode(" ?: throw·%L", missingPropertyBlock)
       }
       separator = ",\n"
@@ -330,8 +331,9 @@ internal class AdapterGenerator(
     return result.build()
   }
 
-  private fun unexpectedNull(identifier: String, reader: ParameterSpec): CodeBlock {
-    return CodeBlock.of("%T.unexpectedNull(%S, %N)", Util::class, identifier, reader)
+  private fun unexpectedNull(property: PropertyGenerator, reader: ParameterSpec): CodeBlock {
+    return CodeBlock.of("%T.unexpectedNull(%S, %L, %N)",
+        Util::class, property.localName, property.jsonNameIfDifferent(), reader)
   }
 
   private fun generateToJsonFun(): FunSpec {
